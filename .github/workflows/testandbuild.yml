@@ -1,5 +1,5 @@
 #Workflow name
-name: CI/CD Pipeline
+name: Test and Build Pipeline
 on:
   #Manually trigger workflow runs
   workflow_dispatch:
@@ -52,11 +52,17 @@ jobs:
       - name: Build with Maven
         run: mvn --batch-mode --update-snapshots package
       #Build the application using Maven
-      - name: Upload JAR
-        #This uploads artifacts from your workflow allowing you to share data between jobs and store data once a workflow is complete.
-        uses: actions/upload-artifact@v2
+      - name: Create Release
+        run: mkdir staging && cp target/*.jar staging
+      - uses: actions/upload-artifact@v3
         with:
-          #Set artifact name
-          name: artifact
-          #From this path
-          path: /target/data-0.0.1-SNAPSHOT.jar
+          name: Package
+          path: staging
+#      - name: Upload JAR
+#        #This uploads artifacts from your workflow allowing you to share data between jobs and store data once a workflow is complete.
+#        uses: actions/upload-artifact@v2
+#        with:
+#          #Set artifact name
+#          name: artifact
+#          #From this path
+#          path: /target/data-0.0.1-SNAPSHOT.jar
