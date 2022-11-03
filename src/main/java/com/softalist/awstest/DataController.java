@@ -14,7 +14,7 @@ import java.util.Locale;
 
         @GetMapping("/")
         public String healthCheck() {
-            return "HEALTH CHECK OK!";
+            return "DEPLOYMENT SUCCEEDED!";
         }
 
         @GetMapping("/version")
