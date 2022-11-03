@@ -58,14 +58,14 @@ jobs:
         with:
           name: Package
           path: staging
-#      - name: Upload JAR
-#        #This uploads artifacts from your workflow allowing you to share data between jobs and store data once a workflow is complete.
-#        uses: actions/upload-artifact@v2
-#        with:
-#          #Set artifact name
-#          name: artifact
-#          #From this path
-#          path: /target/data-0.0.1-SNAPSHOT.jar
+      - name: Upload JAR
+        #This uploads artifacts from your workflow allowing you to share data between jobs and store data once a workflow is complete.
+        uses: actions/upload-artifact@v2
+        with:
+          #Set artifact name
+          name: artifact
+          #From this path
+          path: /target/data-0.0.1-SNAPSHOT.jar
   #Deploy's job
   deploy:
     #Depends on build's job
@@ -78,7 +78,7 @@ jobs:
         #Download the artifact which was uploaded in the build's job
         uses: actions/download-artifact@v2
         with:
-          name: Package
+          name: artifact
       #Deploy the artifact (JAR) into AWS Beanstalk
       - name: Deploy to EB
         uses: einaregilsson/beanstalk-deploy@v13
@@ -91,5 +91,5 @@ jobs:
           environment_name: Springbootdeploy-env
           version_label: ${{github.SHA}}
           region: us-east-1
-#          deployment_package: data-0.0.1-SNAPSHOT.jar
-          deployment_package: Package
+          deployment_package: data-0.0.1-SNAPSHOT.jar
+#          deployment_package: Package
